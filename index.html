@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutomateX - Virtual PLC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .animate-pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .animate-rotate {
+            animation: rotate 10s linear infinite;
+        }
+
+        .glitch {
+            position: relative;
+            color: #fff;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.8;
+        }
+
+        .glitch::before {
+            left: 2px;
+            text-shadow: -2px 0 red;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+
+        .glitch::after {
+            left: -2px;
+            text-shadow: -2px 0 blue;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim2 5s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% { clip: rect(15px, 9999px, 44px, 0); }
+            100% { clip: rect(5px, 9999px, 44px, 0); }
+        }
+
+        @keyframes glitch-anim2 {
+            0% { clip: rect(44px, 9999px, 14px, 0); }
+            100% { clip: rect(44px, 9999px, 5px, 0); }
+        }
+
+        .circuit-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+            opacity: 0.1;
+        }
+
+        .team-member-card {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-member-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .team-member-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0,0,0,0.7);
+            overflow: hidden;
+            width: 100%;
+            height: 0;
+            transition: 0.5s ease;
+        }
+
+        .team-member-card:hover .team-member-overlay {
+            height: 100%;
+        }
+
+        .team-member-text {
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white relative">
+    <div class="circuit-overlay"></div>
+    <div id="root" class="min-h-screen flex flex-col relative overflow-hidden">
+        <header class="bg-gray-800 bg-opacity-90 text-white py-6 shadow-lg relative z-10">
+            <div class="container mx-auto px-4 flex justify-between items-center">
+                <h1 class="text-3xl font-bold glitch" data-text="AutomateX">AutomateX</h1>
+                <nav>
+                    <ul class="flex space-x-4">
+                        <li><a href="#features" class="hover:text-blue-400 transition transform hover:scale-110 duration-300">Features</a></li>
+                        <li><a href="#demo" class="hover:text-green-400 transition transform hover:scale-110 duration-300">Demo</a></li>
+                        <li><a href="#team" class="hover:text-purple-400 transition transform hover:scale-110 duration-300">Team</a></li>
+                        <li><a href="#contact" class="hover:text-red-400 transition transform hover:scale-110 duration-300">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <main class="flex-grow container mx-auto px-4 py-8 relative">
+            <section id="hero" class="text-center mb-12 relative">
+                <div class="absolute -top-20 -right-20 w-96 h-96 bg-blue-600 rounded-full opacity-20 animate-float"></div>
+                <div class="absolute -bottom-20 -left-20 w-96 h-96 bg-green-600 rounded-full opacity-20 animate-float"></div>
+                <div class="relative z-10">
+                    <h2 class="text-5xl font-extrabold text-white mb-4 animate-pulse">Virtual PLC Reimagined</h2>
+                    <p class="text-xl text-gray-300 max-w-2xl mx-auto">AutomateX brings industrial automation to your fingertips with a cutting-edge virtual PLC solution.</p>
+                </div>
+            </section>
+
+            <section id="features" class="grid md:grid-cols-3 gap-6 mb-12">
+                <div class="bg-gray-800 p-6 rounded-lg shadow-2xl hover:shadow-neon transition duration-500 transform hover:scale-105 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-blue-500 animate-rotate"></div>
+                    <h3 class="text-2xl font-bold text-blue-400 mb-4">Real-Time Simulation</h3>
+                    <p class="text-gray-300">Advanced simulation engine for precise industrial control scenarios.</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-lg shadow-2xl hover:shadow-neon transition duration-500 transform hover:scale-105 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-green-500 animate-rotate"></div>
+                    <h3 class="text-2xl font-bold text-green-400 mb-4">Intuitive Interface</h3>
+                    <p class="text-gray-300">User-friendly design making complex automation simple and accessible.</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-lg shadow-2xl hover:shadow-neon transition duration-500 transform hover:scale-105 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-red-500 animate-rotate"></div>
+                    <h3 class="text-2xl font-bold text-red-400 mb-4">Flexible Configuration</h3>
+                    <p class="text-gray-300">Customize and adapt your virtual PLC to diverse industrial needs.</p>
+                </div>
+            </section>
+
+            <section id="demo" class="bg-gray-800 rounded-lg shadow-2xl p-8 mb-12 relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-r from-purple-500 to-indigo-500 opacity-10"></div>
+                <h2 class="text-3xl font-bold text-center mb-6 text-white relative z-10">Live Demo</h2>
+                <div class="flex justify-center relative z-10">
+                    <div class="w-full max-w-2xl bg-gray-900 rounded-lg p-6 text-center">
+                        <p class="text-gray-400">Interactive AutomateX PLC Simulation Coming Soon!</p>
+                        <div class="mt-4 flex justify-center space-x-4">
+                            <button class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-500 transition transform hover:scale-110 duration-300">
+                                Launch Simulation
+                            </button>
+                            <button class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-500 transition transform hover:scale-110 duration-300">
+                                Download Simulator
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="team" class="py-12 bg-gray-800 rounded-lg shadow-2xl">
+                <div class="container mx-auto px-4">
+                    <h2 class="text-4xl font-bold text-center mb-12 text-white">Our Innovative Team</h2>
+                    <div class="grid md:grid-cols-4 gap-8">
+                        <!-- Team Member 1 -->
+                        <div class="team-member-card bg-gray-700 rounded-lg overflow-hidden shadow-lg">
+                            <div class="relative">
+                                <img src="/api/placeholder/300/300" alt="Team Member" class="w-full h-64 object-cover">
+                                <div class="team-member-overlay">
+                                    <div class="team-member-text">
+                                        <h3 class="text-xl font-bold">GUFRAN THAKUR</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-4 text-center">
+                                <h3 class="text-xl font-semibold text-white">GUFRAN THAKUR</h3>
+                                <p class="text-gray-400">CREATED THE APPLICATION</p>
+                            </div>
+                        </div>
+
+                        <!-- Team Member 2 -->
+                        <div class="team-member-card bg-gray-700 rounded-lg overflow-hidden shadow-lg">
+                            <div class="relative">
+                                <img src="/api/placeholder/300/300" alt="Team Member" class="w-full h-64 object-cover">
+                                <div class="team-member-overlay">
+                                    <div class="team-member-text">
+                                        <h3 class="text-xl font-bold">ROSHAN GUPTA</h3>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-4 text-center">
+                                <h3 class="text-xl font-semibold text-white">ROSHAN GUPTA</h3>
+                                <p class="text-gray-400">CREATED THE WEB</p>
+                            </div>
+                        </div>
+
+                        <!-- Team Member 3 -->
+                        <div class="team-member-card bg-gray-700 rounded-lg overflow-hidden shadow-lg">
+                            <div class="relative">
+                                <img src="/api/placeholder/300/300" alt="Team Member" class="w-full h-64 object-cover">
+                                <div class="team-member-overlay">
+                                    <div class="team-member-text">
+                                        <h3 class="text-xl font-bold">ALWAAZ KHAN</h3>                                      
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-4 text-center">
+                                <h3 class="text-xl font-semibold text-white">ALWAAZ KHAN</h3>
+                                <p class="text-gray-400">CREATED THE DOCUMENTATION</p>
+                            </div>
+                        </div>
+
+                        <!-- Team Member 4 -->
+                        <div class="team-member-card bg-gray-700 rounded-lg overflow-hidden shadow-lg">
+                            <div class="relative">
+                                <img src="/api/placeholder/300/300" alt="Team Member" class="w-full h-64 object-cover">
+                                <div class="team-member-overlay">
+                                    <div class="team-member-text">
+                                        <h3 class="text-xl font-bold">FARAZ SHAIKH</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-4 text-center">
+                                <h3 class="text-xl font-semibold text-white">FARAZ SHAIKH</h3>
+                                <p class="text-gray-400">PRINTED THE DOCUMENTATION</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-12">
+                        <div class="inline-block bg-blue-600 text-white px-6 py-3 rounded-full text-lg font-semibold">
+                            Total Team Members: 4
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="contact" class="bg-gray-800 rounded-lg p-8 text-center relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-r from-pink-500 to-red-500 opacity-10"></div>
+                <h2 class="text-3xl font-bold mb-4 text-white relative z-10">Get in Touch</h2>
+                <p class="text-gray-400 mb-6 relative z-10">Interested in AutomateX? Contact us for more information.</p>
+                <div class="space-y-6">
+                    <div class="flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-green-500 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        <a href="mailto:support@automatex.com" class="text-xl text-gray-200 hover:text-blue-400 transition duration-300">
+                            gojouchihia@gmail.com
+                        </a>
+                    </div>
+                    <div class="flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-500 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                        <a href="tel:+1-555-AUTOMATEX" class="text-xl text-gray-200 hover:text-blue-400 transition duration-300">
+                            +91 7208784172
+                        </a>
+                    </div>
+            </section>
+        </main>
+
+        <footer class="bg-black text-white py-6 relative z-10">
+            <div class="container mx-auto px-4 text-center">
+                <p>&copy; 2025 AutomateX. All Rights Reserved.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
